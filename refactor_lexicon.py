@@ -321,7 +321,7 @@ def main():
                             if key not in lexicon[MODULE_PREFIX]:
                                 lexicon[MODULE_PREFIX][key] = body
 
-                            base_call = f'get_text("{full_key}", lang=data.get("lang","ru"))'
+                            base_call = f'get_text("{full_key}", lang)'
                             if is_simple and placeholders:
                                 fmt_args = ", ".join(f"{v}={v}" for v in sorted(set(placeholders)))
                                 replacement = f"{base_call}.format({fmt_args})"
@@ -332,7 +332,7 @@ def main():
                             full_key = f"{MODULE_PREFIX}.{key}"
                             if key not in lexicon[MODULE_PREFIX]:
                                 lexicon[MODULE_PREFIX][key] = body
-                            replacement = f'get_text("{full_key}", lang=data.get("lang","ru"))'
+                            replacement = f'get_text("{full_key}", lang)'
 
                         replacements.append((
                             start_line, end_line, full_literal, replacement, body
@@ -393,4 +393,5 @@ def main():
     print(f"✅ Обработано {len(replacements)} строк.")
 
 if __name__ == "__main__":
+
     main()
