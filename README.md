@@ -9,7 +9,7 @@ await message.answer(f"Привет, {name}! Ваш баланс: {balance} ру
 в:
 ```python
 await message.answer(
-    get_text("greet_user_balance", lang=data.get("lang", "ru")).format(name=name, balance=balance)
+    get_text("greet_user_balance", lang).format(name=name, balance=balance)
 )
 ```
 и добавляет в `LEXICON_RU.auto.py`:
