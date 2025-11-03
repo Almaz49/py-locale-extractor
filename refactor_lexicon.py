@@ -296,8 +296,11 @@ def main():
             i += 1
             continue
 
+        comment_pos = line.find('#')
         j = 0
         while j < len(line):
+            if comment_pos != -1 and j >= comment_pos:
+                break  # пропускаем комментарии
             # Определяем начало кавычек
             if j < len(line) and line[j] in ('"', "'"):
                 quote_start = j
@@ -402,4 +405,5 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
