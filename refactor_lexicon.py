@@ -77,8 +77,15 @@ def translate_word(word: str) -> str:
     return result or "value"
 
 def smart_slugify(text: str) -> str:
+    # Убираем формат-поля вроде {user}, чтобы не мешали
     clean = re.sub(r"\{[^}]+\}", "value", text)
-    words = re.findall(r"[а-яА-Яa-zA-Z0-9]+", clean)
+    # Убираем буквальные escape-последовательности из строкового литерала:
+    # ищем ОДИН обратный слеш + n/r/t и заменяем на пробел
+    clean = re.sub(r"\\[nrtbfv0]", " ", clean)
+    # Также убираем одиночные обратные слеши (на всякий случай)
+    clean = re.sub(r"\\", " ", clean)
+    # Извлекаем слова, включая ё/Ё
+    words = re.findall(r"[а-яА-ЯёЁa-zA-Z0-9]+", clean)
     translated = [translate_word(w) for w in words]
     slug = "_".join(translated).strip("_")
     slug = re.sub(r"_+", "_", slug)
@@ -395,3 +402,4 @@ def main():
 if __name__ == "__main__":
 
     main()
+
